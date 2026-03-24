@@ -275,6 +275,98 @@ def generate_uat_scenarios(
     )
 
 
+def get_scope_item_scenarios(module_id: str) -> list[dict[str, Any]]:
+    """Get test scenarios derived from SAP Best Practices Scope Items.
+
+    Returns structured test scenarios with scope_id linkage.
+    """
+    from app.knowledge.sap_best_practices import get_scope_items_by_module
+
+    scope_items = get_scope_items_by_module(module_id.upper())
+    scenarios: list[dict[str, Any]] = []
+
+    for item in scope_items:
+        for ts in item.test_scenarios:
+            steps = []
+            for i, step_data in enumerate(ts.get("steps", [])):
+                steps.append({
+                    "action": step_data.get("action", ""),
+                    "action_ja": step_data.get("action", ""),
+                    "t_code": step_data.get("t_code", ""),
+                    "input": step_data.get("input", ""),
+                    "expected": step_data.get("expected", ""),
+                    "expected_ja": step_data.get("expected", ""),
+                })
+            scenarios.append({
+                "scope_id": item.scope_id,
+                "name": ts.get("name", item.name_en),
+                "name_ja": ts.get("name_ja", item.name_ja),
+                "type": "integration",
+                "steps": steps,
+            })
+
+    return scenarios
+
+
+def generate_scope_item_test_suite(
+    project_id: str,
+    module_id: str,
+    scope_id: str = "",
+    test_type: str = "all",
+) -> TestSuite:
+    """Generate a test suite based on SAP Best Practices Scope Items.
+
+    If scope_id is provided, generates tests only for that scope item.
+    Otherwise, generates tests for all scope items in the module.
+    """
+    module_id = module_id.upper()
+    mod = get_module(module_id)
+    module_name = mod["name_ja"] if mod else module_id
+
+    scenarios = get_scope_item_scenarios(module_id)
+
+    if scope_id:
+        scenarios = [s for s in scenarios if s.get("scope_id") == scope_id]
+
+    test_cases: list[TestCase] = []
+    for scenario in scenarios:
+        if test_type != "all" and scenario.get("type") != test_type:
+            continue
+        steps = [
+            TestStep(
+                step_number=i + 1,
+                action=s["action"],
+                action_ja=s["action_ja"],
+                t_code=s["t_code"],
+                input_data=s["input"],
+                expected_result=s["expected"],
+                expected_result_ja=s["expected_ja"],
+            )
+            for i, s in enumerate(scenario["steps"])
+        ]
+        scope_label = f" [{scenario.get('scope_id', '')}]" if scenario.get("scope_id") else ""
+        tc = TestCase(
+            project_id=project_id,
+            module_id=module_id,
+            scenario_name=f"{scenario['name']}{scope_label}",
+            scenario_name_ja=f"{scenario['name_ja']}{scope_label}",
+            description=f"SAP Best Practices test scenario for {scenario.get('scope_id', module_id)}",
+            steps=steps,
+            priority="high",
+            test_type=scenario.get("type", "integration"),
+        )
+        test_cases.append(tc)
+
+    return TestSuite(
+        project_id=project_id,
+        name=f"{module_name} Best Practices Test Suite",
+        name_ja=f"{module_name} ベストプラクティス テストスイート",
+        module_id=module_id,
+        test_type=test_type,
+        test_cases=test_cases,
+    )
+
+
 def build_test_generation_prompt(
     module_id: str,
     requirements: str,

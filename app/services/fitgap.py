@@ -2,8 +2,12 @@
 
 Conducts interactive Fit/Gap analysis by:
 1. Asking structured questions about business processes per SAP module
-2. Matching answers against SAP standard functions
+2. Matching answers against SAP standard functions AND SAP Best Practices Scope Items
 3. Generating a Fit/Gap analysis report with fit rate
+4. Applying Fit-to-Standard methodology (SAP Activate) for gap resolution
+
+Enhanced in v2 to use SAP Best Practices Scope Items as the primary matching basis,
+with Fit-to-Standard challenge questions and gap resolution recommendations.
 """
 
 from __future__ import annotations
@@ -425,3 +429,210 @@ def build_fitgap_prompt(session: FitGapSession) -> str:
 
 最後に全体のサマリーを日英両方で記載してください。
 """
+
+
+# ---------------------------------------------------------------------------
+# SAP Best Practices-based Fit/Gap Analysis (v2)
+# ---------------------------------------------------------------------------
+
+def get_scope_items_for_module(module_id: str) -> list[dict[str, Any]]:
+    """Get SAP Best Practices Scope Items for a module as dicts."""
+    from app.knowledge.sap_best_practices import get_scope_items_by_module
+    items = get_scope_items_by_module(module_id.upper())
+    return [item.to_dict() for item in items]
+
+
+def get_common_gap_patterns(module_id: str) -> list[dict[str, Any]]:
+    """Get common gap patterns for a module from SAP Best Practices."""
+    from app.knowledge.sap_best_practices import get_common_gaps_for_module
+    return get_common_gaps_for_module(module_id.upper())
+
+
+def match_scope_items(
+    module_id: str,
+    answers_text: str,
+) -> list[dict[str, Any]]:
+    """Match business requirements against SAP Best Practices Scope Items.
+
+    Returns a list of scope items with fit/gap status based on keyword matching.
+    Enhanced version that uses Scope Item data including common gaps.
+    """
+    from app.knowledge.sap_best_practices import get_scope_items_by_module
+
+    module_id = module_id.upper()
+    scope_items = get_scope_items_by_module(module_id)
+    answers_lower = answers_text.lower()
+    results: list[dict[str, Any]] = []
+
+    for item in scope_items:
+        # Check if scope item keywords are mentioned
+        search_terms = [
+            item.name_en.lower(),
+            item.name_ja,
+        ]
+        # Add key transaction codes as search terms
+        search_terms.extend(t.lower() for t in item.key_transactions)
+        # Add words from process steps
+        for step in item.process_steps:
+            search_terms.append(step.lower())
+
+        mentioned = any(term in answers_lower for term in search_terms if term)
+
+        # Check for common gap pattern matches
+        # Use longer keywords (>5 chars) to avoid false positives from common words
+        matching_gaps: list[str] = []
+        for gap in item.common_gaps:
+            gap_keywords = gap.lower().split()
+            if any(kw in answers_lower for kw in gap_keywords if len(kw) > 5):
+                matching_gaps.append(gap)
+
+        # Determine fit status
+        from app.knowledge.fit_to_standard import FitClassification
+        if mentioned and not matching_gaps:
+            fit_class = FitClassification.STANDARD_FIT
+            status = "fit"
+        elif mentioned and matching_gaps:
+            fit_class = FitClassification.CONFIGURATION_FIT
+            status = "partial_fit"
+        else:
+            fit_class = FitClassification.GAP
+            status = "gap"
+
+        results.append({
+            "scope_id": item.scope_id,
+            "name_en": item.name_en,
+            "name_ja": item.name_ja,
+            "module": item.module,
+            "category": item.category,
+            "fit_classification": fit_class.value,
+            "status": status,
+            "matching_gaps": matching_gaps,
+            "key_transactions": item.key_transactions,
+            "process_steps": item.process_steps,
+            "common_gaps": item.common_gaps,
+        })
+
+    return results
+
+
+def generate_fit_to_standard_report(
+    project_id: str,
+    module_id: str,
+    answers_text: str,
+) -> dict[str, Any]:
+    """Generate a Fit-to-Standard analysis report.
+
+    Combines Scope Item matching with Fit-to-Standard methodology
+    including gap resolution recommendations.
+    """
+    from app.knowledge.fit_to_standard import (
+        FitClassification,
+        FitToStandardReport,
+        FitToStandardItem,
+        recommend_resolution,
+    )
+
+    module_id = module_id.upper()
+    matched = match_scope_items(module_id, answers_text)
+
+    items: list[FitToStandardItem] = []
+    for m in matched:
+        gap_resolution = None
+        recommendation = ""
+        recommendation_ja = ""
+
+        if m["status"] == "gap":
+            gap_resolution = recommend_resolution(
+                gap_description="; ".join(m["common_gaps"][:2]) if m["common_gaps"] else m["name_en"],
+                is_regulatory=False,
+                current_process_changeable=True,
+            )
+            recommendation = (
+                f"Consider {gap_resolution.value.replace('_', ' ')} for {m['name_en']}. "
+                f"Evaluate SAP standard process first."
+            )
+            recommendation_ja = (
+                f"{m['name_ja']}について、まずSAP標準プロセスの採用を検討してください。"
+            )
+        elif m["status"] == "partial_fit":
+            recommendation = (
+                f"Configuration adjustment needed for {m['name_en']}. "
+                f"Potential gaps: {'; '.join(m['matching_gaps'][:2])}"
+            )
+            recommendation_ja = (
+                f"{m['name_ja']}の設定調整が必要です。"
+            )
+
+        item = FitToStandardItem(
+            requirement_id=m["scope_id"],
+            requirement_description=m["name_en"],
+            requirement_description_ja=m["name_ja"],
+            scope_item_id=m["scope_id"],
+            scope_item_name=m["name_en"],
+            fit_classification=FitClassification(m["fit_classification"]),
+            gap_resolution=gap_resolution,
+            gap_description="; ".join(m["matching_gaps"]) if m["matching_gaps"] else "",
+            gap_description_ja="",
+            recommendation=recommendation,
+            recommendation_ja=recommendation_ja,
+        )
+        items.append(item)
+
+    report = FitToStandardReport(
+        project_id=project_id,
+        module_id=module_id,
+        items=items,
+    )
+    report.calculate_statistics()
+
+    mod = get_module(module_id)
+    mod_name = mod["name"] if mod else module_id
+    mod_name_ja = mod["name_ja"] if mod else module_id
+
+    report.summary = (
+        f"Fit-to-Standard analysis for {mod_name}: "
+        f"Standard Fit: {report.standard_fit_count}, "
+        f"Configuration Fit: {report.configuration_fit_count}, "
+        f"Gap: {report.gap_count}. "
+        f"Overall fit rate: {report.overall_fit_rate}%."
+    )
+    report.summary_ja = (
+        f"{mod_name_ja}のFit-to-Standard分析: "
+        f"標準Fit: {report.standard_fit_count}件、"
+        f"設定Fit: {report.configuration_fit_count}件、"
+        f"Gap: {report.gap_count}件。"
+        f"総合Fit率: {report.overall_fit_rate}%。"
+    )
+
+    return report.model_dump()
+
+
+def build_fitgap_prompt_v2(session: "FitGapSession") -> str:
+    """Build an enhanced prompt for LLM-based Fit/Gap analysis using Best Practices.
+
+    Uses SAP Best Practices Scope Items and Fit-to-Standard methodology.
+    """
+    from app.knowledge.sap_best_practices import get_scope_items_by_module
+    from app.knowledge.fit_to_standard import (
+        build_fit_to_standard_prompt,
+    )
+
+    mod = get_module(session.module_id)
+    if mod is None:
+        return ""
+
+    scope_items = get_scope_items_by_module(session.module_id.upper())
+    scope_summary = "\n".join(
+        f"- [{item.scope_id}] {item.name_ja} ({item.name_en}): {item.description}"
+        for item in scope_items
+    )
+
+    answers_summary = "\n".join(
+        f"Q{k}: {v}" for k, v in session.answers.items()
+    )
+
+    return build_fit_to_standard_prompt(
+        module_id=session.module_id,
+        scope_items_summary=scope_summary,
+        business_requirements=answers_summary,
+    )
