@@ -1464,13 +1464,43 @@
   function handleSignup(e) {
     e.preventDefault();
     const email = document.getElementById('email-input').value;
+    const btn = e.target.querySelector('button');
     const note = document.getElementById('signup-note');
     const lang = localStorage.getItem('erpilot-lang') || 'ja';
-    note.textContent = lang === 'ja'
-      ? `✓ ${email} を登録しました。まもなくご連絡します。`
-      : `✓ Registered ${email}. We'll be in touch soon.`;
-    note.style.color = '#22c55e';
-    document.getElementById('email-input').value = '';
+
+    if (!email || !email.includes('@')) {
+      note.textContent = lang === 'ja' ? 'メールアドレスを入力してください' : 'Please enter a valid email';
+      note.style.color = '#ef4444';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = lang === 'ja' ? '送信中...' : 'Sending...';
+
+    fetch('https://formspree.io/f/xjganzyl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'erpilot-lp', lang: lang })
+    })
+    .then(r => {
+      if (r.ok) {
+        note.textContent = lang === 'ja'
+          ? `✓ ${email} を登録しました。まもなくご連絡します。`
+          : `✓ Registered ${email}. We'll be in touch soon.`;
+        note.style.color = '#22c55e';
+        btn.textContent = lang === 'ja' ? '✓ 登録完了' : '✓ Registered';
+        btn.style.background = '#22c55e';
+        document.getElementById('email-input').value = '';
+      } else {
+        throw new Error('送信失敗');
+      }
+    })
+    .catch(() => {
+      note.textContent = lang === 'ja' ? '送信に失敗しました。もう一度お試しください。' : 'Failed. Please try again.';
+      note.style.color = '#ef4444';
+      btn.disabled = false;
+      btn.textContent = lang === 'ja' ? '早期アクセスに登録' : 'Join Early Access';
+    });
   }
 
   // =====================================================
