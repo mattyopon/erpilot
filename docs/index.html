@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERPilot — SAP導入コンサル、まだ月額300万円払いますか？</title>
+  <meta name="description" content="ERPilotなら月額50万円で、Fit/Gap分析からテスト・トレーニングまでAIが自動化。SAPコンサル費を1/6に削減。2027年問題対応を加速。">
+  <meta name="keywords" content="SAP導入, Fit/Gap分析, SAP S/4HANA移行, PMO AI, SAPコンサル, 2027年問題, ERPilot">
+
+  <!-- OGP -->
+  <meta property="og:title" content="ERPilot — SAP導入コンサル、まだ月額300万円払いますか？">
+  <meta property="og:description" content="月額50万円でFit/Gap分析・PMOダッシュボード・テストケース生成・トレーニング資料をAIが自動化。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mattyopon.github.io/erpilot/">
+  <meta property="og:image" content="https://mattyopon.github.io/erpilot/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ERPilot — SAP導入コンサル、まだ月額300万円払いますか？">
+  <meta name="twitter:description" content="月額50万円でFit/Gap分析・PMOダッシュボード・テストケース生成をAIが自動化。SAPコンサル費を1/6に。">
+
+  <!-- Favicon (SVG inline) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231e3a5f'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-size='13' font-weight='bold' fill='%23f97316'>ERP</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Navy (信頼性) */
+      --navy-50: #eff3fa;
+      --navy-100: #d9e2f5;
+      --navy-600: #1e3a5f;
+      --navy-700: #162d4a;
+      --navy-800: #0f2035;
+      --navy-900: #0a1628;
+      /* Orange (アクション) */
+      --orange-400: #fb923c;
+      --orange-500: #f97316;
+      --orange-600: #ea6e0a;
+      /* Slate */
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --red-500: #ef4444;
+      --amber-500: #f59e0b;
+      --white: #ffffff;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--slate-800);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white: #0f172a;
+        --slate-50: #1e293b;
+        --slate-100: #1e293b;
+        --slate-200: #334155;
+        --slate-800: #e2e8f0;
+        --slate-900: #f1f5f9;
+        --slate-700: #cbd5e1;
+        --slate-600: #94a3b8;
+        --slate-500: #94a3b8;
+      }
+      body { background: #0f172a; color: #e2e8f0; }
+      .card { background: #1e293b; border-color: #334155; }
+      .nav { background: rgba(10,22,40,.95); border-color: rgba(255,255,255,.08); }
+      .hero-badge { background: rgba(30,58,95,.4); color: #93c5fd; border-color: rgba(30,58,95,.6); }
+      .stats-section { background: #1e293b; }
+      .problems-section { background: #0f172a; }
+      .features-section { background: #1e293b; }
+      .compare-section { background: #0f172a; }
+      .pricing-section { background: #1e293b; }
+      .modules-section { background: #0f172a; }
+      .faq-section { background: #1e293b; }
+      .faq-item { border-color: #334155; }
+      .faq-question { color: #e2e8f0; }
+      .compare-table { background: #1e293b; }
+      .compare-table th { background: #334155; color: #e2e8f0; }
+      .compare-table td { border-color: #334155; }
+      .compare-table tr:nth-child(even) td { background: #0f172a; }
+      .pricing-card { background: #0f172a; border-color: #334155; }
+      .pricing-card.featured { background: #162d4a; border-color: #f97316; }
+      .input-group input { background: #1e293b; border-color: #475569; color: #e2e8f0; }
+      .input-group input::placeholder { color: #64748b; }
+      .module-badge { background: #1e293b; border-color: #334155; color: #94a3b8; }
+    }
+
+    /* ===== LAYOUT ===== */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 80px 0; }
+    @media (max-width: 768px) { section { padding: 56px 0; } }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1140px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-size: 20px; font-weight: 700; color: var(--navy-600);
+      text-decoration: none; letter-spacing: -.5px;
+    }
+    .nav-logo span { color: var(--orange-500); }
+    .nav-right {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    /* ===== LANGUAGE SWITCHER ===== */
+    .lang-switcher {
+      display: flex; align-items: center; gap: 4px;
+      background: var(--slate-100);
+      border-radius: 100px;
+      padding: 3px;
+    }
+    .lang-btn {
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 10px; border-radius: 100px;
+      font-size: 12px; font-weight: 600;
+      border: none; cursor: pointer;
+      background: transparent;
+      color: var(--slate-500);
+      transition: background .2s, color .2s, transform .15s;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--slate-700); }
+    .lang-btn.active {
+      background: var(--white);
+      color: var(--navy-600);
+      box-shadow: 0 1px 4px rgba(0,0,0,.12);
+    }
+    .lang-btn .lang-flag { font-size: 15px; }
+    @media (prefers-color-scheme: dark) {
+      .lang-switcher { background: #334155; }
+      .lang-btn.active { background: #475569; color: #93c5fd; }
+      .lang-btn { color: #94a3b8; }
+    }
+    @media (max-width: 480px) {
+      .lang-btn .lang-label { display: none; }
+      .lang-btn { padding: 5px 7px; }
+    }
+
+    .nav-cta {
+      background: var(--orange-500); color: var(--white);
+      padding: 8px 20px; border-radius: 8px;
+      font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: background .2s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--orange-600); }
+    @media (max-width: 640px) { .nav-cta { padding: 7px 14px; font-size: 13px; } }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 140px 0 96px;
+      background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 45%, #1a2f50 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, rgba(249,115,22,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(30,58,95,.4) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(249,115,22,.15); color: #fdba74;
+      border: 1px solid rgba(249,115,22,.35);
+      padding: 6px 16px; border-radius: 100px;
+      font-size: 13px; font-weight: 600;
+      margin-bottom: 28px; letter-spacing: .3px;
+    }
+    .hero-badge-dot {
+      width: 7px; height: 7px; background: var(--orange-400);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .6; transform: scale(1.3); }
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 54px);
+      font-weight: 900; color: var(--white);
+      line-height: 1.18; letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+    .hero h1 .accent { color: var(--orange-400); }
+    .hero-sub {
+      font-size: clamp(15px, 2.2vw, 19px);
+      color: #94a3b8; max-width: 680px; margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .hero-sub strong { color: #bfdbfe; font-weight: 600; }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--orange-500); color: var(--white);
+      padding: 16px 36px; border-radius: 10px;
+      font-size: 17px; font-weight: 700;
+      text-decoration: none; transition: all .2s;
+      box-shadow: 0 4px 24px rgba(249,115,22,.5);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover {
+      background: var(--orange-600);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(249,115,22,.6);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,.08); color: #e2e8f0;
+      padding: 16px 32px; border-radius: 10px;
+      font-size: 17px; font-weight: 600;
+      text-decoration: none; transition: all .2s;
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(4px);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,.14); }
+    .hero-note {
+      margin-top: 20px; color: #64748b; font-size: 13px;
+    }
+
+    /* ===== STATS ===== */
+    .stats-section { background: var(--slate-50); }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 32px; text-align: center;
+    }
+    @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .stat-number {
+      font-size: clamp(44px, 8vw, 72px);
+      font-weight: 900; color: var(--orange-500);
+      line-height: 1; letter-spacing: -2px; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 15px; color: var(--slate-600); font-weight: 500; }
+    .stat-sub { font-size: 13px; color: var(--slate-500); margin-top: 4px; }
+
+    /* ===== SECTION HEADING ===== */
+    .section-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      color: var(--orange-500); text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 800; color: var(--slate-900);
+      line-height: 1.25; letter-spacing: -.5px;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 17px; color: var(--slate-600);
+      max-width: 600px; line-height: 1.7;
+    }
+    .text-center { text-align: center; }
+    .text-center .section-desc { margin: 0 auto; }
+
+    /* ===== PROBLEMS ===== */
+    .problems-section { background: var(--white); }
+    .problems-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .problem-card {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .problem-icon {
+      width: 40px; height: 40px; min-width: 40px;
+      background: #fff7ed; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .problem-card h3 { font-size: 15px; font-weight: 700; color: var(--slate-800); margin-bottom: 6px; }
+    .problem-card p { font-size: 14px; color: var(--slate-600); line-height: 1.6; }
+
+    /* ===== FEATURES ===== */
+    .features-section { background: var(--slate-50); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .card-icon {
+      font-size: 28px; margin-bottom: 14px;
+      display: block;
+    }
+    .card h3 { font-size: 15px; font-weight: 700; color: var(--slate-800); margin-bottom: 8px; }
+    .card p { font-size: 14px; color: var(--slate-600); line-height: 1.6; }
+    .card-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      background: #fff7ed; color: var(--orange-600);
+      border: 1px solid #fed7aa;
+      padding: 2px 8px; border-radius: 100px; margin-top: 10px;
+    }
+
+    /* ===== COMPARE ===== */
+    .compare-section { background: var(--white); }
+    .compare-wrapper { overflow-x: auto; margin-top: 48px; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); }
+    .compare-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--white); font-size: 15px;
+    }
+    .compare-table th {
+      padding: 18px 24px; text-align: left;
+      background: var(--navy-800); color: var(--white);
+      font-weight: 700; font-size: 14px;
+    }
+    .compare-table th:first-child { border-radius: var(--radius-lg) 0 0 0; }
+    .compare-table th:last-child { border-radius: 0 var(--radius-lg) 0 0; }
+    .compare-table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--slate-100);
+      color: var(--slate-700);
+      vertical-align: middle;
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:last-child td:first-child { border-radius: 0 0 0 var(--radius-lg); }
+    .compare-table tr:last-child td:last-child { border-radius: 0 0 var(--radius-lg) 0; }
+    .compare-table tr:nth-child(even) td { background: var(--slate-50); }
+    .compare-table td:first-child { font-weight: 600; color: var(--slate-800); }
+    .compare-table .consultant-col { color: var(--red-500); }
+    .compare-table .erpilot-col { color: var(--green-600); font-weight: 600; }
+    .check { color: var(--green-600); font-size: 18px; }
+    .cross { color: var(--red-500); font-size: 18px; }
+
+    /* ===== COST COMPARISON ===== */
+    .cost-section { background: var(--slate-50); }
+    .cost-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-top: 48px;
+    }
+    @media (max-width: 640px) { .cost-grid { grid-template-columns: 1fr; } }
+    .cost-card {
+      background: var(--white); border: 2px solid var(--slate-200);
+      border-radius: var(--radius-lg); padding: 32px;
+      text-align: center;
+    }
+    .cost-card.highlight {
+      border-color: var(--orange-500);
+      box-shadow: 0 0 0 4px rgba(249,115,22,.08);
+    }
+    .cost-card-label {
+      font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--slate-500); margin-bottom: 12px;
+    }
+    .cost-card.highlight .cost-card-label { color: var(--orange-500); }
+    .cost-amount {
+      font-size: clamp(32px, 5vw, 48px); font-weight: 900;
+      color: var(--slate-900); letter-spacing: -1.5px;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .cost-card.highlight .cost-amount { color: var(--orange-500); }
+    .cost-unit { font-size: 14px; color: var(--slate-500); margin-bottom: 16px; }
+    .cost-saving {
+      display: inline-block; background: #dcfce7; color: #166534;
+      font-size: 14px; font-weight: 700;
+      padding: 6px 16px; border-radius: 100px;
+    }
+    .cost-annual {
+      font-size: 14px; color: var(--slate-600); margin-top: 12px;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing-section { background: var(--white); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px; margin-top: 48px; align-items: start;
+    }
+    .pricing-card {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      position: relative;
+    }
+    .pricing-card.featured {
+      background: var(--navy-600);
+      border-color: var(--navy-600);
+      color: var(--white);
+      transform: scale(1.04);
+      box-shadow: 0 24px 48px rgba(30,58,95,.4);
+    }
+    .featured-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--orange-500); color: var(--white);
+      font-size: 12px; font-weight: 800; padding: 4px 16px;
+      border-radius: 100px; white-space: nowrap; letter-spacing: .5px;
+    }
+    .plan-name {
+      font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--slate-500);
+      margin-bottom: 8px;
+    }
+    .pricing-card.featured .plan-name { color: #bfdbfe; }
+    .plan-price {
+      font-size: 38px; font-weight: 900; color: var(--slate-900);
+      line-height: 1; letter-spacing: -1.5px; margin-bottom: 4px;
+    }
+    .pricing-card.featured .plan-price { color: var(--white); }
+    .plan-price-unit { font-size: 16px; font-weight: 500; }
+    .plan-desc { font-size: 14px; color: var(--slate-500); margin-bottom: 24px; margin-top: 8px; }
+    .pricing-card.featured .plan-desc { color: #bfdbfe; }
+    .plan-features { list-style: none; margin-bottom: 28px; }
+    .plan-features li {
+      font-size: 14px; color: var(--slate-700);
+      padding: 7px 0; border-bottom: 1px solid var(--slate-100);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .pricing-card.featured .plan-features li { color: #e0eeff; border-color: rgba(255,255,255,.15); }
+    .plan-features li::before {
+      content: '✓'; color: var(--green-500);
+      font-weight: 700; font-size: 13px; margin-top: 2px; flex-shrink: 0;
+    }
+    .pricing-card.featured .plan-features li::before { color: #86efac; }
+    .plan-features li:last-child { border-bottom: none; }
+    .btn-plan {
+      display: block; width: 100%;
+      padding: 14px; border-radius: 10px;
+      font-size: 15px; font-weight: 700;
+      text-align: center; text-decoration: none;
+      transition: all .2s; cursor: pointer;
+      border: none;
+    }
+    .btn-plan-outline {
+      border: 2px solid var(--slate-300);
+      color: var(--slate-700); background: transparent;
+    }
+    .btn-plan-outline:hover { border-color: var(--orange-500); color: var(--orange-500); }
+    .btn-plan-orange {
+      background: var(--orange-500); color: var(--white);
+      box-shadow: 0 4px 12px rgba(249,115,22,.4);
+    }
+    .btn-plan-orange:hover { background: var(--orange-600); transform: translateY(-1px); }
+
+    /* ===== SAP MODULES ===== */
+    .modules-section { background: var(--navy-900); }
+    .modules-section .section-label { color: var(--orange-400); }
+    .modules-section .section-title { color: #e2e8f0; }
+    .modules-section .section-desc { color: #94a3b8; }
+    .modules-grid {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center; margin-top: 40px;
+    }
+    .module-badge {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #e2e8f0;
+      padding: 10px 20px; border-radius: 8px;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: .5px;
+      transition: background .2s, border-color .2s;
+    }
+    .module-badge:hover {
+      background: rgba(249,115,22,.2);
+      border-color: rgba(249,115,22,.5);
+      color: #fdba74;
+    }
+    .module-badge .module-name { font-size: 11px; font-weight: 500; color: #94a3b8; margin-left: 6px; }
+
+    /* ===== FAQ ===== */
+    .faq-section { background: var(--slate-50); }
+    .faq-list { max-width: 780px; margin: 48px auto 0; }
+    .faq-item {
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 4px;
+      font-size: 16px; font-weight: 600; color: var(--slate-800);
+      cursor: pointer; user-select: none;
+      gap: 16px;
+    }
+    .faq-question:hover { color: var(--orange-500); }
+    .faq-icon {
+      width: 28px; height: 28px; min-width: 28px;
+      background: var(--orange-500); color: var(--white);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; transition: transform .25s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .3s ease;
+    }
+    .faq-item.open .faq-answer { max-height: 400px; }
+    .faq-answer-inner {
+      font-size: 15px; color: var(--slate-600); line-height: 1.75;
+      padding: 0 4px 24px;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy-800), #1a2f50, #0f172a);
+      padding: 96px 0; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(249,115,22,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-section h2 {
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: 900; color: var(--white);
+      margin-bottom: 16px; letter-spacing: -.5px;
+    }
+    .cta-section p { color: #94a3b8; font-size: 17px; margin-bottom: 40px; }
+    .input-group {
+      display: flex; gap: 12px; max-width: 480px; margin: 0 auto;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .input-group input {
+      flex: 1; min-width: 220px;
+      padding: 14px 18px; border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.08);
+      color: var(--white); font-size: 15px;
+      font-family: inherit;
+      backdrop-filter: blur(4px);
+    }
+    .input-group input::placeholder { color: #64748b; }
+    .input-group input:focus { outline: none; border-color: var(--orange-400); }
+    .btn-cta {
+      padding: 14px 28px; border-radius: 10px;
+      background: var(--orange-500); color: var(--white);
+      font-size: 15px; font-weight: 700;
+      border: none; cursor: pointer;
+      font-family: inherit; transition: all .2s;
+      white-space: nowrap;
+    }
+    .btn-cta:hover { background: var(--orange-600); transform: translateY(-1px); }
+    .cta-note { font-size: 13px; color: #64748b; margin-top: 14px; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--navy-900);
+      color: #64748b; padding: 40px 0;
+      font-size: 14px;
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { color: #64748b; text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: #94a3b8; }
+    .footer-logo { color: var(--orange-400); font-weight: 700; text-decoration: none; }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      height: 1px; background: var(--slate-200);
+      max-width: 1140px; margin: 0 auto;
+    }
+
+    /* ===== UTILITY ===== */
+    .mt-4 { margin-top: 4px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-16 { margin-top: 16px; }
+    .mb-0 { margin-bottom: 0; }
+
+    /* ===== SCROLL ANIMATION ===== */
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== URGENCY BANNER ===== */
+    .urgency-banner {
+      background: linear-gradient(90deg, #7c2d12, #9a3412);
+      color: #fed7aa;
+      text-align: center; padding: 10px 24px;
+      font-size: 13px; font-weight: 600;
+      position: relative; z-index: 101;
+    }
+    .urgency-banner strong { color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-banner" id="urgency-bar">
+  <span data-i18n="urgency.text"><strong>⚠️ 2027年末 SAP ECC保守終了まで残り約2年。</strong>　移行スケジュール、間に合っていますか？</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="メインナビゲーション">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">ER<span>Pilot</span></a>
+    <div class="nav-right">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" id="btn-ja" onclick="setLang('ja')" aria-label="日本語">
+          <span class="lang-flag">🇯🇵</span>
+          <span class="lang-label">日本語</span>
+        </button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-label="English">
+          <span class="lang-flag">🇺🇸</span>
+          <span class="lang-label">English</span>
+        </button>
+      </div>
+      <a href="#cta" class="nav-cta" data-i18n="nav.cta">無料でFit/Gap分析を試す →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top" style="padding-top: 160px;">
+  <div class="container hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      <span data-i18n="hero.badge">SAP PMO AI — Fit/Gap分析・テスト・トレーニングを自動化</span>
+    </div>
+    <h1 data-i18n-html="hero.h1">SAP導入コンサル、まだ<br><span class="accent">月額300万円</span>払いますか？</h1>
+    <p class="hero-sub" data-i18n-html="hero.sub">
+      ERPilotなら<strong>月額50万円</strong>で、Fit/Gap分析からテスト・トレーニングまで<strong>AIが自動化</strong>。<br>
+      バイリンガルPMO機能で2027年問題対応を加速します。
+    </p>
+    <div class="hero-btns">
+      <a href="#cta" class="btn-primary">
+        <span data-i18n="hero.cta.primary">無料でFit/Gap分析を試す</span>
+        <span>→</span>
+      </a>
+      <a href="#features" class="btn-secondary" data-i18n="hero.cta.secondary">機能を見る</a>
+    </div>
+    <p class="hero-note" data-i18n="hero.note">クレジットカード不要・登録2分</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="fade-in">
+        <div class="stat-number">1<span style="font-size:.45em">/6</span></div>
+        <div class="stat-label" data-i18n="stats.cost.label">のコスト</div>
+        <div class="stat-sub" data-i18n="stats.cost.sub">SAPコンサル5人チーム比</div>
+      </div>
+      <div class="fade-in">
+        <div class="stat-number">80<span style="font-size:.5em">%</span></div>
+        <div class="stat-label" data-i18n="stats.effort.label">の工数削減</div>
+        <div class="stat-sub" data-i18n="stats.effort.sub">Fit/Gap分析・テスト・資料作成</div>
+      </div>
+      <div class="fade-in">
+        <div class="stat-number">2<span style="font-size:.45em; letter-spacing:-1px;" data-i18n="stats.time.unit">日</span></div>
+        <div class="stat-label" data-i18n="stats.time.label">でFit/Gap分析完了</div>
+        <div class="stat-sub" data-i18n="stats.time.sub">従来2〜3ヶ月 → たった2日</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="problems-section" id="problems">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-label" data-i18n="problems.label">課題</div>
+      <h2 class="section-title" data-i18n-html="problems.title">SAP移行プロジェクト、<br>こんな状況ではありませんか？</h2>
+    </div>
+    <div class="problems-grid">
+      <div class="problem-card fade-in">
+        <div class="problem-icon">💸</div>
+        <div>
+          <h3 data-i18n="problems.p1.title">移行費用が想定の2〜3倍</h3>
+          <p data-i18n="problems.p1.desc">SAP S/4HANA移行費用が「5億円超」と半数以上の企業が回答（電通総研調査）。企業が妥当と思う1〜3億円の2〜3倍に膨らむのが実態。</p>
+        </div>
+      </div>
+      <div class="problem-card fade-in">
+        <div class="problem-icon">👔</div>
+        <div>
+          <h3 data-i18n="problems.p2.title">コンサル人月単価が高騰</h3>
+          <p data-i18n="problems.p2.desc">SAPコンサルの人月単価は120〜400万円。バイリンガルPMOは月額300万円。5人チームで月1,500万円は当たり前の相場。</p>
+        </div>
+      </div>
+      <div class="problem-card fade-in">
+        <div class="problem-icon">⏰</div>
+        <div>
+          <h3 data-i18n="problems.p3.title">2027年末の期限が迫っている</h3>
+          <p data-i18n="problems.p3.desc">SAP ECCの保守終了まで残り約2年。Fit/Gap分析に2〜3ヶ月かける余裕はない。今すぐ分析を開始する必要がある。</p>
+        </div>
+      </div>
+      <div class="problem-card fade-in">
+        <div class="problem-icon">🌐</div>
+        <div>
+          <h3 data-i18n="problems.p4.title">日英コミュニケーションの壁</h3>
+          <p data-i18n="problems.p4.desc">グローバルテンプレート展開では日英の業務用語・SAP専門用語の翻訳が課題。週次レポートの翻訳だけで膨大な時間を浪費する。</p>
+        </div>
+      </div>
+      <div class="problem-card fade-in">
+        <div class="problem-icon">🧪</div>
+        <div>
+          <h3 data-i18n="problems.p5.title">テストシナリオ作成に膨大な工数</h3>
+          <p data-i18n="problems.p5.desc">SAPのテストケース作成はT-codeの知識が必要で専門スキルが不可欠。業務要件からテストシナリオへの変換は人手では限界がある。</p>
+        </div>
+      </div>
+      <div class="problem-card fade-in">
+        <div class="problem-icon">📚</div>
+        <div>
+          <h3 data-i18n="problems.p6.title">トレーニング資料の作成が追いつかない</h3>
+          <p data-i18n="problems.p6.desc">Go-live後のユーザートレーニングに必要な操作手順書を日英両言語で作成するのは膨大な作業。品質・スピードの両立が困難。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="container">
+    <div class="fade-in text-center">
+      <div class="section-label" data-i18n="features.label">機能</div>
+      <h2 class="section-title" data-i18n="features.title">SAP導入PMOに必要な5つのAI機能</h2>
+      <p class="section-desc" data-i18n="features.desc">ヒアリングから分析・テスト・トレーニングまで。AIが自動化することでコンサルチームの工数を60〜80%削減します。</p>
+    </div>
+    <div class="features-grid">
+      <div class="card fade-in">
+        <span class="card-icon">🔍</span>
+        <h3 data-i18n="features.f1.title">Fit/Gap分析AI</h3>
+        <p data-i18n="features.f1.desc">チャット形式で業務ヒアリング → SAP標準機能との自動マッピング。従来2〜3ヶ月の分析をたった2日で完了。</p>
+        <span class="card-badge" data-i18n="features.badge.starter">Starter以上</span>
+      </div>
+      <div class="card fade-in">
+        <span class="card-icon">📊</span>
+        <h3 data-i18n="features.f2.title">PMOダッシュボード</h3>
+        <p data-i18n="features.f2.desc">進捗・課題・リスクを自動集約し遅延リスクを予測。日英週次レポートを自動生成。ステアリングコミッティ資料も即時作成。</p>
+        <span class="card-badge" data-i18n="features.badge.professional">Professional以上</span>
+      </div>
+      <div class="card fade-in">
+        <span class="card-icon">🧪</span>
+        <h3 data-i18n="features.f3.title">テストケース自動生成</h3>
+        <p data-i18n="features.f3.desc">業務要件からSAPテストシナリオ（T-code付き）を自動生成。UAT・SITのテスト計画を大幅に前倒し、品質を向上。</p>
+        <span class="card-badge" data-i18n="features.badge.starter">Starter以上</span>
+      </div>
+      <div class="card fade-in">
+        <span class="card-icon">📚</span>
+        <h3 data-i18n="features.f4.title">トレーニング資料自動生成</h3>
+        <p data-i18n="features.f4.desc">SAP操作手順書を日英両言語で自動生成。Go-live後のユーザートレーニング準備を圧倒的に効率化。モジュール別・役割別に最適化。</p>
+        <span class="card-badge" data-i18n="features.badge.starter">Starter以上</span>
+      </div>
+      <div class="card fade-in">
+        <span class="card-icon">🌐</span>
+        <h3 data-i18n="features.f5.title">日英ブリッジ</h3>
+        <p data-i18n="features.f5.desc">SAP専門用語集付き翻訳エンジンで会議議事録・要件定義書を要約・翻訳。バイリンガルPMOの月額300万円を不要にします。</p>
+        <span class="card-badge" data-i18n="features.badge.professional">Professional以上</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE — コスト比較 -->
+<section class="cost-section" id="cost">
+  <div class="container">
+    <div class="fade-in text-center">
+      <div class="section-label" data-i18n="cost.label">コスト比較</div>
+      <h2 class="section-title" data-i18n="cost.title">年間1億円の削減効果</h2>
+      <p class="section-desc" data-i18n="cost.desc">SAPコンサル5人チームとERPilot導入時の実際のコスト差。</p>
+    </div>
+    <div class="cost-grid fade-in">
+      <div class="cost-card">
+        <div class="cost-card-label" data-i18n="cost.consultant.label">SAPコンサル（5人チーム）</div>
+        <div class="cost-amount">¥1,500<span style="font-size:.5em">万</span></div>
+        <div class="cost-unit" data-i18n="cost.per_month">/月</div>
+        <div class="cost-annual" data-i18n="cost.consultant.annual">年間 1.8億円</div>
+      </div>
+      <div class="cost-card highlight">
+        <div class="cost-card-label" data-i18n="cost.erpilot.label">ERPilot + コンサル2人</div>
+        <div class="cost-amount">¥650<span style="font-size:.5em">万</span></div>
+        <div class="cost-unit" data-i18n="cost.per_month">/月</div>
+        <div class="cost-saving" data-i18n="cost.saving">→ 年間1億円削減</div>
+        <div class="cost-annual" data-i18n="cost.erpilot.annual">年間 7,800万円</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="compare-section" id="compare">
+  <div class="container">
+    <div class="fade-in text-center">
+      <div class="section-label" data-i18n="compare.label">比較</div>
+      <h2 class="section-title" data-i18n="compare.title">コンサル vs ERPilot</h2>
+      <p class="section-desc" data-i18n="compare.desc">従来のSAPコンサルティングと比べて、コスト・スピードともに圧倒的な違いがあります。</p>
+    </div>
+    <div class="compare-wrapper fade-in">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th data-i18n="compare.th.item">項目</th>
+            <th data-i18n="compare.th.consultant">SAPコンサル（5人）</th>
+            <th>ERPilot + コンサル2人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="compare.row1.label">月額コスト</td>
+            <td class="consultant-col" data-i18n="compare.row1.consultant">1,500万円</td>
+            <td class="erpilot-col" data-i18n="compare.row1.erpilot">650万円</td>
+          </tr>
+          <tr>
+            <td data-i18n="compare.row2.label">Fit/Gap分析期間</td>
+            <td class="consultant-col" data-i18n="compare.row2.consultant">2〜3ヶ月</td>
+            <td class="erpilot-col" data-i18n="compare.row2.erpilot">2日</td>
+          </tr>
+          <tr>
+            <td data-i18n="compare.row3.label">テストケース作成</td>
+            <td class="consultant-col" data-i18n="compare.row3.consultant">数週間（手作業）</td>
+            <td class="erpilot-col" data-i18n="compare.row3.erpilot">数時間（AI自動生成）</td>
+          </tr>
+          <tr>
+            <td data-i18n="compare.row4.label">日英週次レポート</td>
+            <td class="consultant-col" data-i18n="compare.row4.consultant">バイリンガルPMO月300万円</td>
+            <td class="erpilot-col" data-i18n="compare.row4.erpilot">自動生成（含む）</td>
+          </tr>
+          <tr>
+            <td data-i18n="compare.row5.label">トレーニング資料</td>
+            <td class="consultant-col" data-i18n="compare.row5.consultant">別途費用・数週間</td>
+            <td class="erpilot-col" data-i18n="compare.row5.erpilot">AI自動生成（日英）</td>
+          </tr>
+          <tr>
+            <td data-i18n="compare.row6.label">24/7アクセス</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="compare.row7.label">遅延リスク予測</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="compare.row8.label">データ学習なし</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="check">✓</span> <span data-i18n="compare.row8.note" style="font-size:12px; color: var(--slate-500);">監査証跡付き</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="fade-in text-center">
+      <div class="section-label" data-i18n="pricing.label">料金</div>
+      <h2 class="section-title" data-i18n="pricing.title">シンプルな料金体系</h2>
+      <p class="section-desc" data-i18n="pricing.desc">SAPコンサル1人の人月以下のコストで、5人分の作業をAIが代替します。</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="pricing-card fade-in">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">¥50<span class="plan-price-unit" style="font-size:20px">万</span><span class="plan-price-unit" data-i18n="pricing.per_month">/月</span></div>
+        <div class="plan-desc" data-i18n="pricing.starter.desc">Fit/Gap分析から始めたい企業に</div>
+        <ul class="plan-features">
+          <li data-i18n="pricing.starter.f1">Fit/Gap分析AI（無制限）</li>
+          <li data-i18n="pricing.starter.f2">テストケース自動生成</li>
+          <li data-i18n="pricing.starter.f3">トレーニング資料自動生成（日英）</li>
+          <li data-i18n="pricing.starter.f4">SAP専門用語集（9モジュール）</li>
+          <li data-i18n="pricing.starter.f5">メールサポート</li>
+        </ul>
+        <a href="#cta" class="btn-plan btn-plan-outline" data-i18n="pricing.starter.cta">Starterを選ぶ</a>
+      </div>
+      <!-- Professional (featured) -->
+      <div class="pricing-card featured fade-in">
+        <div class="featured-badge" data-i18n="pricing.popular">人気 No.1</div>
+        <div class="plan-name">Professional</div>
+        <div class="plan-price">¥80<span class="plan-price-unit" style="font-size:20px">万</span><span class="plan-price-unit" data-i18n="pricing.per_month">/月</span></div>
+        <div class="plan-desc" data-i18n="pricing.professional.desc">PMO全体をAIで支援したい企業に</div>
+        <ul class="plan-features">
+          <li data-i18n="pricing.professional.f1">Starterプランのすべて</li>
+          <li data-i18n="pricing.professional.f2">PMOダッシュボード</li>
+          <li data-i18n="pricing.professional.f3">日英ブリッジ（議事録・要件定義翻訳）</li>
+          <li data-i18n="pricing.professional.f4">週次レポート自動生成</li>
+          <li data-i18n="pricing.professional.f5">遅延リスク予測AI</li>
+          <li data-i18n="pricing.professional.f6">チームメンバー10名</li>
+          <li data-i18n="pricing.professional.f7">優先サポート</li>
+        </ul>
+        <a href="#cta" class="btn-plan btn-plan-orange" data-i18n="pricing.professional.cta">Professionalを選ぶ</a>
+      </div>
+      <!-- Enterprise -->
+      <div class="pricing-card fade-in">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price" style="font-size:28px; letter-spacing:-0.5px" data-i18n="pricing.enterprise.price">要相談</div>
+        <div class="plan-desc" data-i18n="pricing.enterprise.desc">大規模展開・オンプレミス対応が必要な企業に</div>
+        <ul class="plan-features">
+          <li data-i18n="pricing.enterprise.f1">Professionalプランのすべて</li>
+          <li data-i18n="pricing.enterprise.f2">カスタムモジュール対応</li>
+          <li data-i18n="pricing.enterprise.f3">オンプレミス対応</li>
+          <li data-i18n="pricing.enterprise.f4">SLA保証（99.9%稼働率）</li>
+          <li data-i18n="pricing.enterprise.f5">無制限メンバー</li>
+          <li data-i18n="pricing.enterprise.f6">専任カスタマーサクセス</li>
+          <li data-i18n="pricing.enterprise.f7">セキュリティ監査対応</li>
+        </ul>
+        <a href="#cta" class="btn-plan btn-plan-outline" data-i18n="pricing.enterprise.cta">お問い合わせ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAP MODULES -->
+<section class="modules-section" id="modules">
+  <div class="container">
+    <div class="fade-in text-center">
+      <div class="section-label" data-i18n="modules.label">対応モジュール</div>
+      <h2 class="section-title" data-i18n="modules.title">9つのSAPモジュールに対応</h2>
+      <p class="section-desc" data-i18n="modules.desc">主要SAPモジュールの業務知識を搭載。モジュールをまたいだ横断的なFit/Gap分析も可能です。</p>
+    </div>
+    <div class="modules-grid fade-in">
+      <div class="module-badge">SD <span class="module-name" data-i18n="modules.sd">販売管理</span></div>
+      <div class="module-badge">MM <span class="module-name" data-i18n="modules.mm">購買・在庫管理</span></div>
+      <div class="module-badge">FI <span class="module-name" data-i18n="modules.fi">財務会計</span></div>
+      <div class="module-badge">CO <span class="module-name" data-i18n="modules.co">管理会計</span></div>
+      <div class="module-badge">PP <span class="module-name" data-i18n="modules.pp">生産管理</span></div>
+      <div class="module-badge">WM <span class="module-name" data-i18n="modules.wm">倉庫管理</span></div>
+      <div class="module-badge">QM <span class="module-name" data-i18n="modules.qm">品質管理</span></div>
+      <div class="module-badge">PM <span class="module-name" data-i18n="modules.pm">設備保全</span></div>
+      <div class="module-badge">HR <span class="module-name" data-i18n="modules.hr">人事管理</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="fade-in text-center">
+      <div class="section-label" data-i18n="faq.label">よくある質問</div>
+      <h2 class="section-title">FAQ</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item fade-in">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          <span data-i18n="faq.q1.q">SAPの専門知識がなくても使えますか？</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q1.a">
+            はい。ERPilotはチャット形式で業務ヒアリングを行い、AIがSAP標準機能へのマッピングを自動実行します。ユーザーはSAPのT-codeや技術的な知識がなくても、業務要件を日本語で話すだけでFit/Gap分析を開始できます。
+          </div>
+        </div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          <span data-i18n="faq.q2.q">既存のSAPコンサルと併用できますか？</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q2.a">
+            はい。ERPilotはSAPコンサルの工数を60〜70%削減する補助ツールです。現在のコンサルチームとの並走を前提に設計されており、コンサルが高付加価値業務に集中できるよう、定型作業（Fit/Gapドキュメント作成・テストケース作成・トレーニング資料作成）をAIが代替します。
+          </div>
+        </div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          <span data-i18n="faq.q3.q">2027年問題の移行スケジュールに間に合いますか？</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q3.a">
+            ERPilotのFit/Gap分析は従来2〜3ヶ月かかる作業を2日で完了します。今すぐ始めれば、2027年末のSAP ECC保守終了に向けた移行計画を大幅に前倒しできます。まずは無料トライアルでFit/Gap分析をお試しください。
+          </div>
+        </div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          <span data-i18n="faq.q4.q">業務データは安全ですか？AIに学習されませんか？</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q4.a">
+            業務データはAIモデルの学習には使用されません。入力された業務情報はセッション内でのみ使用され、セッション終了後は削除されます。また、すべての操作に監査証跡が付与されるため、社内セキュリティ・コンプライアンス要件にも対応しています。
+          </div>
+        </div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          <span data-i18n="faq.q5.q">対応しているSAPバージョンを教えてください。</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q5.a">
+            SAP S/4HANA（オンプレミス・クラウド）およびSAP ECC 6.0からS/4HANAへの移行プロジェクトに対応しています。Fit/Gap分析はS/4HANAの標準機能を基準に実施します。RISE with SAPへの移行案件にも対応しております。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container cta-content">
+    <h2 data-i18n="cta.title">まずは無料でFit/Gap分析を試してみませんか？</h2>
+    <p data-i18n="cta.desc">チャット形式の業務ヒアリングで、SAP S/4HANAとの適合状況を2日で可視化。今すぐ登録してください。</p>
+    <form class="input-group" onsubmit="handleSignup(event)">
+      <input type="email" id="email-input" required aria-label="Email"
+             data-i18n-placeholder="cta.email.placeholder" placeholder="メールアドレスを入力">
+      <button type="submit" class="btn-cta" data-i18n="cta.submit">無料で始める →</button>
+    </form>
+    <p class="cta-note" id="signup-note" data-i18n="cta.note">登録無料・スパムメールは送りません・いつでも退会可能</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <a href="#top" class="footer-logo">ERPilot</a>
+    <div class="footer-links">
+      <a href="#" data-i18n="footer.privacy">プライバシーポリシー</a>
+      <a href="#" data-i18n="footer.terms">利用規約</a>
+      <a href="#" data-i18n="footer.contact">お問い合わせ</a>
+    </div>
+    <div>© 2026 ERPilot. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // =====================================================
+  // i18n — 日本語⇔英語切替
+  // =====================================================
+
+  const TRANSLATIONS = {
+    ja: {
+      'nav.cta': '無料でFit/Gap分析を試す →',
+
+      'urgency.text': '<strong>⚠️ 2027年末 SAP ECC保守終了まで残り約2年。</strong>　移行スケジュール、間に合っていますか？',
+
+      'hero.badge': 'SAP PMO AI — Fit/Gap分析・テスト・トレーニングを自動化',
+      'hero.h1': 'SAP導入コンサル、まだ<br><span class="accent">月額300万円</span>払いますか？',
+      'hero.sub': 'ERPilotなら<strong>月額50万円</strong>で、Fit/Gap分析からテスト・トレーニングまで<strong>AIが自動化</strong>。<br>バイリンガルPMO機能で2027年問題対応を加速します。',
+      'hero.cta.primary': '無料でFit/Gap分析を試す',
+      'hero.cta.secondary': '機能を見る',
+      'hero.note': 'クレジットカード不要・登録2分',
+
+      'stats.cost.label': 'のコスト',
+      'stats.cost.sub': 'SAPコンサル5人チーム比',
+      'stats.effort.label': 'の工数削減',
+      'stats.effort.sub': 'Fit/Gap分析・テスト・資料作成',
+      'stats.time.unit': '日',
+      'stats.time.label': 'でFit/Gap分析完了',
+      'stats.time.sub': '従来2〜3ヶ月 → たった2日',
+
+      'problems.label': '課題',
+      'problems.title': 'SAP移行プロジェクト、<br>こんな状況ではありませんか？',
+      'problems.p1.title': '移行費用が想定の2〜3倍',
+      'problems.p1.desc': 'SAP S/4HANA移行費用が「5億円超」と半数以上の企業が回答（電通総研調査）。企業が妥当と思う1〜3億円の2〜3倍に膨らむのが実態。',
+      'problems.p2.title': 'コンサル人月単価が高騰',
+      'problems.p2.desc': 'SAPコンサルの人月単価は120〜400万円。バイリンガルPMOは月額300万円。5人チームで月1,500万円は当たり前の相場。',
+      'problems.p3.title': '2027年末の期限が迫っている',
+      'problems.p3.desc': 'SAP ECCの保守終了まで残り約2年。Fit/Gap分析に2〜3ヶ月かける余裕はない。今すぐ分析を開始する必要がある。',
+      'problems.p4.title': '日英コミュニケーションの壁',
+      'problems.p4.desc': 'グローバルテンプレート展開では日英の業務用語・SAP専門用語の翻訳が課題。週次レポートの翻訳だけで膨大な時間を浪費する。',
+      'problems.p5.title': 'テストシナリオ作成に膨大な工数',
+      'problems.p5.desc': 'SAPのテストケース作成はT-codeの知識が必要で専門スキルが不可欠。業務要件からテストシナリオへの変換は人手では限界がある。',
+      'problems.p6.title': 'トレーニング資料の作成が追いつかない',
+      'problems.p6.desc': 'Go-live後のユーザートレーニングに必要な操作手順書を日英両言語で作成するのは膨大な作業。品質・スピードの両立が困難。',
+
+      'features.label': '機能',
+      'features.title': 'SAP導入PMOに必要な5つのAI機能',
+      'features.desc': 'ヒアリングから分析・テスト・トレーニングまで。AIが自動化することでコンサルチームの工数を60〜80%削減します。',
+      'features.badge.starter': 'Starter以上',
+      'features.badge.professional': 'Professional以上',
+      'features.f1.title': 'Fit/Gap分析AI',
+      'features.f1.desc': 'チャット形式で業務ヒアリング → SAP標準機能との自動マッピング。従来2〜3ヶ月の分析をたった2日で完了。',
+      'features.f2.title': 'PMOダッシュボード',
+      'features.f2.desc': '進捗・課題・リスクを自動集約し遅延リスクを予測。日英週次レポートを自動生成。ステアリングコミッティ資料も即時作成。',
+      'features.f3.title': 'テストケース自動生成',
+      'features.f3.desc': '業務要件からSAPテストシナリオ（T-code付き）を自動生成。UAT・SITのテスト計画を大幅に前倒し、品質を向上。',
+      'features.f4.title': 'トレーニング資料自動生成',
+      'features.f4.desc': 'SAP操作手順書を日英両言語で自動生成。Go-live後のユーザートレーニング準備を圧倒的に効率化。モジュール別・役割別に最適化。',
+      'features.f5.title': '日英ブリッジ',
+      'features.f5.desc': 'SAP専門用語集付き翻訳エンジンで会議議事録・要件定義書を要約・翻訳。バイリンガルPMOの月額300万円を不要にします。',
+
+      'cost.label': 'コスト比較',
+      'cost.title': '年間1億円の削減効果',
+      'cost.desc': 'SAPコンサル5人チームとERPilot導入時の実際のコスト差。',
+      'cost.consultant.label': 'SAPコンサル（5人チーム）',
+      'cost.erpilot.label': 'ERPilot + コンサル2人',
+      'cost.per_month': '/月',
+      'cost.saving': '→ 年間1億円削減',
+      'cost.consultant.annual': '年間 1.8億円',
+      'cost.erpilot.annual': '年間 7,800万円',
+
+      'compare.label': '比較',
+      'compare.title': 'コンサル vs ERPilot',
+      'compare.desc': '従来のSAPコンサルティングと比べて、コスト・スピードともに圧倒的な違いがあります。',
+      'compare.th.item': '項目',
+      'compare.th.consultant': 'SAPコンサル（5人）',
+      'compare.row1.label': '月額コスト',
+      'compare.row1.consultant': '1,500万円',
+      'compare.row1.erpilot': '650万円',
+      'compare.row2.label': 'Fit/Gap分析期間',
+      'compare.row2.consultant': '2〜3ヶ月',
+      'compare.row2.erpilot': '2日',
+      'compare.row3.label': 'テストケース作成',
+      'compare.row3.consultant': '数週間（手作業）',
+      'compare.row3.erpilot': '数時間（AI自動生成）',
+      'compare.row4.label': '日英週次レポート',
+      'compare.row4.consultant': 'バイリンガルPMO月300万円',
+      'compare.row4.erpilot': '自動生成（含む）',
+      'compare.row5.label': 'トレーニング資料',
+      'compare.row5.consultant': '別途費用・数週間',
+      'compare.row5.erpilot': 'AI自動生成（日英）',
+      'compare.row6.label': '24/7アクセス',
+      'compare.row7.label': '遅延リスク予測',
+      'compare.row8.label': 'データ学習なし',
+      'compare.row8.note': '監査証跡付き',
+
+      'pricing.label': '料金',
+      'pricing.title': 'シンプルな料金体系',
+      'pricing.desc': 'SAPコンサル1人の人月以下のコストで、5人分の作業をAIが代替します。',
+      'pricing.per_month': '/月',
+      'pricing.popular': '人気 No.1',
+      'pricing.starter.desc': 'Fit/Gap分析から始めたい企業に',
+      'pricing.starter.f1': 'Fit/Gap分析AI（無制限）',
+      'pricing.starter.f2': 'テストケース自動生成',
+      'pricing.starter.f3': 'トレーニング資料自動生成（日英）',
+      'pricing.starter.f4': 'SAP専門用語集（9モジュール）',
+      'pricing.starter.f5': 'メールサポート',
+      'pricing.starter.cta': 'Starterを選ぶ',
+      'pricing.professional.desc': 'PMO全体をAIで支援したい企業に',
+      'pricing.professional.f1': 'Starterプランのすべて',
+      'pricing.professional.f2': 'PMOダッシュボード',
+      'pricing.professional.f3': '日英ブリッジ（議事録・要件定義翻訳）',
+      'pricing.professional.f4': '週次レポート自動生成',
+      'pricing.professional.f5': '遅延リスク予測AI',
+      'pricing.professional.f6': 'チームメンバー10名',
+      'pricing.professional.f7': '優先サポート',
+      'pricing.professional.cta': 'Professionalを選ぶ',
+      'pricing.enterprise.price': '要相談',
+      'pricing.enterprise.desc': '大規模展開・オンプレミス対応が必要な企業に',
+      'pricing.enterprise.f1': 'Professionalプランのすべて',
+      'pricing.enterprise.f2': 'カスタムモジュール対応',
+      'pricing.enterprise.f3': 'オンプレミス対応',
+      'pricing.enterprise.f4': 'SLA保証（99.9%稼働率）',
+      'pricing.enterprise.f5': '無制限メンバー',
+      'pricing.enterprise.f6': '専任カスタマーサクセス',
+      'pricing.enterprise.f7': 'セキュリティ監査対応',
+      'pricing.enterprise.cta': 'お問い合わせ',
+
+      'modules.label': '対応モジュール',
+      'modules.title': '9つのSAPモジュールに対応',
+      'modules.desc': '主要SAPモジュールの業務知識を搭載。モジュールをまたいだ横断的なFit/Gap分析も可能です。',
+      'modules.sd': '販売管理',
+      'modules.mm': '購買・在庫管理',
+      'modules.fi': '財務会計',
+      'modules.co': '管理会計',
+      'modules.pp': '生産管理',
+      'modules.wm': '倉庫管理',
+      'modules.qm': '品質管理',
+      'modules.pm': '設備保全',
+      'modules.hr': '人事管理',
+
+      'faq.label': 'よくある質問',
+      'faq.q1.q': 'SAPの専門知識がなくても使えますか？',
+      'faq.q1.a': 'はい。ERPilotはチャット形式で業務ヒアリングを行い、AIがSAP標準機能へのマッピングを自動実行します。ユーザーはSAPのT-codeや技術的な知識がなくても、業務要件を日本語で話すだけでFit/Gap分析を開始できます。',
+      'faq.q2.q': '既存のSAPコンサルと併用できますか？',
+      'faq.q2.a': 'はい。ERPilotはSAPコンサルの工数を60〜70%削減する補助ツールです。現在のコンサルチームとの並走を前提に設計されており、コンサルが高付加価値業務に集中できるよう、定型作業（Fit/Gapドキュメント作成・テストケース作成・トレーニング資料作成）をAIが代替します。',
+      'faq.q3.q': '2027年問題の移行スケジュールに間に合いますか？',
+      'faq.q3.a': 'ERPilotのFit/Gap分析は従来2〜3ヶ月かかる作業を2日で完了します。今すぐ始めれば、2027年末のSAP ECC保守終了に向けた移行計画を大幅に前倒しできます。まずは無料トライアルでFit/Gap分析をお試しください。',
+      'faq.q4.q': '業務データは安全ですか？AIに学習されませんか？',
+      'faq.q4.a': '業務データはAIモデルの学習には使用されません。入力された業務情報はセッション内でのみ使用され、セッション終了後は削除されます。また、すべての操作に監査証跡が付与されるため、社内セキュリティ・コンプライアンス要件にも対応しています。',
+      'faq.q5.q': '対応しているSAPバージョンを教えてください。',
+      'faq.q5.a': 'SAP S/4HANA（オンプレミス・クラウド）およびSAP ECC 6.0からS/4HANAへの移行プロジェクトに対応しています。Fit/Gap分析はS/4HANAの標準機能を基準に実施します。RISE with SAPへの移行案件にも対応しております。',
+
+      'cta.title': 'まずは無料でFit/Gap分析を試してみませんか？',
+      'cta.desc': 'チャット形式の業務ヒアリングで、SAP S/4HANAとの適合状況を2日で可視化。今すぐ登録してください。',
+      'cta.email.placeholder': 'メールアドレスを入力',
+      'cta.submit': '無料で始める →',
+      'cta.note': '登録無料・スパムメールは送りません・いつでも退会可能',
+
+      'footer.privacy': 'プライバシーポリシー',
+      'footer.terms': '利用規約',
+      'footer.contact': 'お問い合わせ',
+    },
+
+    en: {
+      'nav.cta': 'Try Free Fit/Gap Analysis →',
+
+      'urgency.text': '<strong>⚠️ SAP ECC end of maintenance: December 2027 — approximately 2 years left.</strong>  Is your migration on schedule?',
+
+      'hero.badge': 'SAP PMO AI — Automate Fit/Gap Analysis, Testing & Training',
+      'hero.h1': 'Still paying <span class="accent">¥3M/month</span> for SAP consultants?',
+      'hero.sub': 'ERPilot automates Fit/Gap analysis, test cases, and training materials for just <strong>¥500K/month</strong>.<br>Bilingual PMO included. Accelerate your 2027 migration.',
+      'hero.cta.primary': 'Try Free Fit/Gap Analysis',
+      'hero.cta.secondary': 'View Features',
+      'hero.note': 'No credit card required · 2-minute signup',
+
+      'stats.cost.label': 'of the Cost',
+      'stats.cost.sub': 'vs. 5-consultant SAP team',
+      'stats.effort.label': 'Effort Reduction',
+      'stats.effort.sub': 'Fit/Gap, testing & documentation',
+      'stats.time.unit': 'days',
+      'stats.time.label': 'for Fit/Gap Analysis',
+      'stats.time.sub': 'From 2–3 months → just 2 days',
+
+      'problems.label': 'Challenges',
+      'problems.title': 'Does this sound familiar<br>on your SAP migration?',
+      'problems.p1.title': 'Migration Costs 2–3x Over Budget',
+      'problems.p1.desc': 'Over half of companies report SAP S/4HANA migration costs exceeding ¥500M (Dentsu Research). That\'s 2–3x what companies considered reasonable.',
+      'problems.p2.title': 'Consultant Rates Are Soaring',
+      'problems.p2.desc': 'SAP consultant rates range ¥1.2M–4M/month per person. A bilingual PMO alone costs ¥3M/month. A 5-person team easily runs ¥15M/month.',
+      'problems.p3.title': 'The 2027 Deadline Is Approaching',
+      'problems.p3.desc': 'SAP ECC maintenance ends in late 2027 — roughly 2 years away. You can\'t afford to spend 2–3 months on Fit/Gap analysis. You need to start now.',
+      'problems.p4.title': 'Language Barrier Between JP & Global Teams',
+      'problems.p4.desc': 'Global template deployments require translating business and SAP terminology between Japanese and English. Weekly report translation alone wastes enormous time.',
+      'problems.p5.title': 'Test Scenario Creation Is Overwhelming',
+      'problems.p5.desc': 'SAP test case creation requires deep knowledge of T-codes and specialized expertise. Converting business requirements to test scenarios manually doesn\'t scale.',
+      'problems.p6.title': 'Training Materials Can\'t Keep Up',
+      'problems.p6.desc': 'Creating bilingual SAP operation guides for Go-live user training is an enormous effort. Maintaining both quality and speed is nearly impossible manually.',
+
+      'features.label': 'Features',
+      'features.title': '5 AI Features for SAP PMO',
+      'features.desc': 'From requirements gathering to analysis, testing, and training. AI automation reduces consultant workload by 60–80%.',
+      'features.badge.starter': 'Starter+',
+      'features.badge.professional': 'Professional+',
+      'features.f1.title': 'Fit/Gap Analysis AI',
+      'features.f1.desc': 'Chat-based business requirements gathering → automatic mapping to SAP standard functions. Complete in 2 days what used to take 2–3 months.',
+      'features.f2.title': 'PMO Dashboard',
+      'features.f2.desc': 'Auto-aggregates progress, issues, and risks with delay prediction. Auto-generates bilingual weekly reports and steering committee materials.',
+      'features.f3.title': 'Test Case Auto-Generation',
+      'features.f3.desc': 'Auto-generates SAP test scenarios with T-codes from business requirements. Significantly accelerates UAT and SIT test planning.',
+      'features.f4.title': 'Training Material Auto-Generation',
+      'features.f4.desc': 'Auto-generates SAP operation guides in both Japanese and English. Dramatically accelerates Go-live user training preparation, optimized by module and role.',
+      'features.f5.title': 'JP-EN Bridge',
+      'features.f5.desc': 'Translation engine with SAP glossary for meeting minutes and requirements documents. Eliminates the need for a ¥3M/month bilingual PMO.',
+
+      'cost.label': 'Cost Comparison',
+      'cost.title': '¥100M Annual Savings',
+      'cost.desc': 'Real cost difference between a 5-consultant SAP team and ERPilot.',
+      'cost.consultant.label': 'SAP Consultants (5-person team)',
+      'cost.erpilot.label': 'ERPilot + 2 Consultants',
+      'cost.per_month': '/month',
+      'cost.saving': '→ Save ¥100M annually',
+      'cost.consultant.annual': '¥180M annually',
+      'cost.erpilot.annual': '¥78M annually',
+
+      'compare.label': 'Comparison',
+      'compare.title': 'Consultants vs ERPilot',
+      'compare.desc': 'ERPilot offers a decisive advantage over traditional SAP consulting in both cost and speed.',
+      'compare.th.item': 'Item',
+      'compare.th.consultant': 'SAP Consultants (5 people)',
+      'compare.row1.label': 'Monthly Cost',
+      'compare.row1.consultant': '¥15M',
+      'compare.row1.erpilot': '¥6.5M',
+      'compare.row2.label': 'Fit/Gap Analysis Time',
+      'compare.row2.consultant': '2–3 months',
+      'compare.row2.erpilot': '2 days',
+      'compare.row3.label': 'Test Case Creation',
+      'compare.row3.consultant': 'Several weeks (manual)',
+      'compare.row3.erpilot': 'Hours (AI auto-generated)',
+      'compare.row4.label': 'Bilingual Weekly Reports',
+      'compare.row4.consultant': 'Bilingual PMO ¥3M/month',
+      'compare.row4.erpilot': 'Auto-generated (included)',
+      'compare.row5.label': 'Training Materials',
+      'compare.row5.consultant': 'Additional cost, weeks',
+      'compare.row5.erpilot': 'AI auto-generated (JP/EN)',
+      'compare.row6.label': '24/7 Access',
+      'compare.row7.label': 'Delay Risk Prediction',
+      'compare.row8.label': 'No Data Training',
+      'compare.row8.note': 'with audit trail',
+
+      'pricing.label': 'Pricing',
+      'pricing.title': 'Simple, Transparent Pricing',
+      'pricing.desc': 'AI replaces the work of 5 consultants for less than the cost of a single SAP consultant per month.',
+      'pricing.per_month': '/mo',
+      'pricing.popular': 'Most Popular',
+      'pricing.starter.desc': 'For companies starting with Fit/Gap analysis',
+      'pricing.starter.f1': 'Fit/Gap Analysis AI (unlimited)',
+      'pricing.starter.f2': 'Test Case Auto-Generation',
+      'pricing.starter.f3': 'Training Materials Auto-Generation (JP/EN)',
+      'pricing.starter.f4': 'SAP Glossary (9 modules)',
+      'pricing.starter.f5': 'Email Support',
+      'pricing.starter.cta': 'Choose Starter',
+      'pricing.professional.desc': 'For companies wanting AI-powered PMO support',
+      'pricing.professional.f1': 'Everything in Starter',
+      'pricing.professional.f2': 'PMO Dashboard',
+      'pricing.professional.f3': 'JP-EN Bridge (minutes & requirements translation)',
+      'pricing.professional.f4': 'Weekly Report Auto-Generation',
+      'pricing.professional.f5': 'Delay Risk Prediction AI',
+      'pricing.professional.f6': '10 Team Members',
+      'pricing.professional.f7': 'Priority Support',
+      'pricing.professional.cta': 'Choose Professional',
+      'pricing.enterprise.price': 'Contact Us',
+      'pricing.enterprise.desc': 'For large-scale or on-premises deployments',
+      'pricing.enterprise.f1': 'Everything in Professional',
+      'pricing.enterprise.f2': 'Custom Module Support',
+      'pricing.enterprise.f3': 'On-Premises Deployment',
+      'pricing.enterprise.f4': 'SLA Guarantee (99.9% uptime)',
+      'pricing.enterprise.f5': 'Unlimited Members',
+      'pricing.enterprise.f6': 'Dedicated Customer Success',
+      'pricing.enterprise.f7': 'Security Audit Support',
+      'pricing.enterprise.cta': 'Contact Us',
+
+      'modules.label': 'Supported Modules',
+      'modules.title': '9 SAP Modules Supported',
+      'modules.desc': 'Built-in business knowledge for all major SAP modules. Cross-module Fit/Gap analysis also available.',
+      'modules.sd': 'Sales & Distribution',
+      'modules.mm': 'Materials Management',
+      'modules.fi': 'Financial Accounting',
+      'modules.co': 'Controlling',
+      'modules.pp': 'Production Planning',
+      'modules.wm': 'Warehouse Management',
+      'modules.qm': 'Quality Management',
+      'modules.pm': 'Plant Maintenance',
+      'modules.hr': 'Human Resources',
+
+      'faq.label': 'FAQ',
+      'faq.q1.q': 'Can I use ERPilot without SAP expertise?',
+      'faq.q1.a': 'Yes. ERPilot conducts business requirements gathering through natural conversation, and AI automatically maps your requirements to SAP standard functions. Users don\'t need T-code knowledge or technical SAP expertise — just describe your business requirements and Fit/Gap analysis begins immediately.',
+      'faq.q2.q': 'Can ERPilot work alongside existing SAP consultants?',
+      'faq.q2.a': 'Yes. ERPilot is designed as a co-pilot that reduces SAP consultant workload by 60–70%. It\'s built to run alongside your current consulting team, enabling consultants to focus on high-value work while AI handles routine tasks: Fit/Gap documentation, test case creation, and training material creation.',
+      'faq.q3.q': 'Can we make the 2027 migration deadline in time?',
+      'faq.q3.a': 'ERPilot completes Fit/Gap analysis in 2 days versus the traditional 2–3 months. Starting now gives you ample time to front-load your migration plan before the SAP ECC end-of-maintenance deadline in late 2027. Try our free Fit/Gap analysis to get started immediately.',
+      'faq.q4.q': 'Is our business data safe? Will it be used for AI training?',
+      'faq.q4.a': 'Your business data is never used for AI model training. Input business information is used only within your session and deleted after the session ends. All operations include audit trail records to support your internal security and compliance requirements.',
+      'faq.q5.q': 'Which SAP versions are supported?',
+      'faq.q5.a': 'ERPilot supports SAP S/4HANA (on-premises and cloud) and migration projects from SAP ECC 6.0 to S/4HANA. Fit/Gap analysis is conducted against S/4HANA standard functionality as the baseline. RISE with SAP migration projects are also supported.',
+
+      'cta.title': 'Try a Free Fit/Gap Analysis Today',
+      'cta.desc': 'Chat-based business requirements gathering reveals your SAP S/4HANA fit in 2 days. Sign up now.',
+      'cta.email.placeholder': 'Enter your email address',
+      'cta.submit': 'Start for Free →',
+      'cta.note': 'Free registration · No spam · Cancel anytime',
+
+      'footer.privacy': 'Privacy Policy',
+      'footer.terms': 'Terms of Service',
+      'footer.contact': 'Contact',
+    }
+  };
+
+  // =====================================================
+  // Language switching logic
+  // =====================================================
+
+  function setLang(lang) {
+    localStorage.setItem('erpilot-lang', lang);
+    document.documentElement.lang = lang;
+
+    // Update button states
+    document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+    const t = TRANSLATIONS[lang];
+
+    // data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    // data-i18n-html (allows HTML)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // data-i18n-placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (t[key] !== undefined) el.placeholder = t[key];
+    });
+  }
+
+  // Detect initial language
+  (function() {
+    const saved = localStorage.getItem('erpilot-lang');
+    const browser = navigator.language || navigator.userLanguage || 'ja';
+    const detected = saved || (browser.startsWith('ja') ? 'ja' : 'en');
+    setLang(detected);
+  })();
+
+  // =====================================================
+  // FAQ accordion
+  // =====================================================
+
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const item = this.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      // Toggle
+      if (!isOpen) item.classList.add('open');
+      this.setAttribute('aria-expanded', !isOpen);
+    });
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
+    });
+  });
+
+  // =====================================================
+  // Email signup
+  // =====================================================
+
+  function handleSignup(e) {
+    e.preventDefault();
+    const email = document.getElementById('email-input').value;
+    const note = document.getElementById('signup-note');
+    const lang = localStorage.getItem('erpilot-lang') || 'ja';
+    note.textContent = lang === 'ja'
+      ? `✓ ${email} を登録しました。まもなくご連絡します。`
+      : `✓ Registered ${email}. We'll be in touch soon.`;
+    note.style.color = '#22c55e';
+    document.getElementById('email-input').value = '';
+  }
+
+  // =====================================================
+  // Scroll animation (Intersection Observer)
+  // =====================================================
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
